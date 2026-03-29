@@ -64,7 +64,6 @@ agromind/
 - Python 3.11+
 - Node.js 18+
 - MongoDB (local or Atlas)
-- Anthropic API key
 
 ### 1. Clone & Setup Backend
 
@@ -137,15 +136,6 @@ npm run dev
   }
 }
 ```
-
-### GET /api/advisory/demo/safe
-### GET /api/advisory/demo/blocked
-### GET /api/advisory/demo/clarification
-
-### GET /api/audit/logs?limit=20&skip=0&compliance_status=Blocked
-### GET /api/audit/stats
-### GET /api/health
-
 ---
 
 ## 🧪 Demo Scenarios
