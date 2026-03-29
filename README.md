@@ -48,7 +48,17 @@ agromind/
     ├── tailwind.config.js
     └── vite.config.js
 ```
+---
 
+## 🖥️ System Interface
+
+| 🏠 Home Dashboard | 🌾 Advisory AI Agent | 📊 Compliance Audit |
+| :--- | :--- | :--- |
+| ![Home](assets/homepage.png) | ![Advisor](assets/advisor.png) | ![Audit](assets/audit.png) |
+
+> **Note:** Ensure your images are saved in an `assets/` folder in your root directory, or replace the paths above with direct URLs if hosting them on a service like Imgur.
+
+---
 ---
 
 ## ⚙️ Setup Instructions
