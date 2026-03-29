@@ -1,0 +1,152 @@
+{
+  "version": "2024-INDIA-v3",
+  "last_updated": "2024-10-01",
+  "authority": "ICAR / CIB&RC / FSSAI",
+
+  "banned_pesticides": [
+    "endosulfan",
+    "monocrotophos",
+    "methyl_parathion",
+    "phosphamidon",
+    "triazophos",
+    "chlorpyrifos_high_dose",
+    "ddt",
+    "aldrin",
+    "dieldrin",
+    "lindane",
+    "carbofuran_granules",
+    "acephate_on_vegetables",
+    "methomyl",
+    "dichlorvos_high_dose"
+  ],
+
+  "restricted_pesticides": {
+    "chlorpyrifos": {
+      "max_dose_ml_per_acre": 400,
+      "prohibited_crops": ["vegetables", "fruits"],
+      "pre_harvest_interval_days": 21,
+      "note": "CIB&RC restricted — not on edible crops within 21 days"
+    },
+    "imidacloprid": {
+      "max_dose_ml_per_acre": 150,
+      "max_applications_per_season": 2,
+      "note": "Neonicotinoid — rotate IRAC group each season"
+    },
+    "glyphosate": {
+      "allowed_crops": ["non-crop areas", "plantation", "wheat_pre-sowing"],
+      "prohibited_crops": ["cotton_post-emergence", "vegetables", "paddy"],
+      "max_dose_ml_per_acre": 800,
+      "note": "Not approved for direct-seeded paddy fields"
+    },
+    "paraquat": {
+      "max_dose_ml_per_acre": 600,
+      "requires_license": true,
+      "note": "Restricted use — licensed applicator only"
+    }
+  },
+
+  "fertilizer_dosage_limits_kg_per_acre": {
+    "urea":                  { "max": 50,  "unit": "kg/acre/application", "season_max": 100 },
+    "dap":                   { "max": 50,  "unit": "kg/acre" },
+    "mop":                   { "max": 40,  "unit": "kg/acre" },
+    "ssp":                   { "max": 100, "unit": "kg/acre" },
+    "calcium_ammonium_nitrate": { "max": 65, "unit": "kg/acre/application" },
+    "zinc_sulphate":         { "max": 10,  "unit": "kg/acre" },
+    "borax":                 { "max": 2,   "unit": "kg/acre" }
+  },
+
+  "crop_specific_rules": {
+    "cotton": {
+      "max_bt_events_per_variety": 1,
+      "banned_pesticides_extra": ["acephate_on_bolls"],
+      "irac_rotation_required": true,
+      "note": "Bt cotton — resistance management mandatory; max 2 neonicotinoid sprays"
+    },
+    "paddy": {
+      "water_management": "AWD preferred (Alternate Wetting & Drying)",
+      "prohibited": ["glyphosate_post_emergence"],
+      "max_nitrogen_kg_per_acre": 50,
+      "note": "ICAR paddy nitrogen protocol — split application required"
+    },
+    "wheat": {
+      "seed_treatment_mandatory": true,
+      "max_nitrogen_kg_per_acre": 60
+    },
+    "vegetables": {
+      "prohibited_pesticides": ["chlorpyrifos", "acephate", "monocrotophos"],
+      "pre_harvest_interval_days_min": 7,
+      "note": "FSSAI MRL compliance mandatory for market sale"
+    },
+    "groundnut": {
+      "aflatoxin_risk": "high",
+      "storage_humidity_max_percent": 70,
+      "note": "Test for aflatoxin before market/export"
+    }
+  },
+
+  "region_specific_constraints": {
+    "maharashtra": {
+      "groundwater_critical_zones": ["yavatmal", "aurangabad", "latur"],
+      "bore_deepening_requires_permit": true,
+      "max_water_extraction_mm_per_year": 1520,
+      "note": "Maharashtra Groundwater Act 2009"
+    },
+    "punjab": {
+      "paddy_sowing_window": "June 10 - June 20",
+      "msw_prohibited_burning": true,
+      "note": "Stubble burning ban — ₹2,500 fine per incident"
+    },
+    "gujarat": {
+      "organic_zones": ["amreli", "junagadh", "rajkot"],
+      "drip_subsidy_available": true,
+      "note": "95% drip irrigation subsidy for SC/ST farmers"
+    },
+    "andhra_pradesh": {
+      "natural_farming_zones": ["kurnool", "kadapa", "anantapur"],
+      "zero_budget_natural_farming_supported": true
+    }
+  },
+
+  "water_usage_limits": {
+    "sugarcane_flood_mm_per_year_max": 1800,
+    "paddy_flood_mm_per_season_max": 1200,
+    "cotton_drip_recommended_mm": 600,
+    "groundwater_semi_critical_extraction_max_mm": 1520
+  },
+
+  "organic_certification_rules": {
+    "npop_conversion_years": 3,
+    "pgs_conversion_years": 2,
+    "buffer_zone_meters": 5,
+    "prohibited_inputs": ["synthetic_pesticides", "synthetic_fertilizers", "gmo_seeds"],
+    "mandatory_farm_diary": true
+  },
+
+  "msp_crops_2024_25": {
+    "paddy_common":      { "msp_per_quintal": 2183, "procurement_agency": "FCI" },
+    "paddy_grade_a":     { "msp_per_quintal": 2203, "procurement_agency": "FCI" },
+    "wheat":             { "msp_per_quintal": 2275, "procurement_agency": "FCI" },
+    "cotton_medium":     { "msp_per_quintal": 7121, "procurement_agency": "CCI" },
+    "cotton_long":       { "msp_per_quintal": 7521, "procurement_agency": "CCI" },
+    "groundnut":         { "msp_per_quintal": 6783, "procurement_agency": "NAFED" },
+    "soybean_yellow":    { "msp_per_quintal": 4892, "procurement_agency": "NAFED" },
+    "sugarcane_fair_remunerative": { "msp_per_quintal": 340, "procurement_agency": "Sugar_Mills" }
+  },
+
+  "safety_thresholds": {
+    "confidence_warn_below": 0.65,
+    "confidence_block_below": 0.40,
+    "max_pesticide_mentions_before_flag": 3,
+    "ec_salinity_wheat_damage_ds_per_m": 2.0,
+    "ec_salinity_cotton_damage_ds_per_m": 7.7
+  },
+
+  "government_schemes": {
+    "pm_kisan":         { "benefit_per_year": 6000, "installments": 3 },
+    "pmfby_kharif":     { "farmer_premium_percent": 2 },
+    "pmfby_rabi":       { "farmer_premium_percent": 1.5 },
+    "pkvy_organic":     { "subsidy_per_ha_3yr": 50000 },
+    "pmksy_drip":       { "subsidy_percent_sc_st": 95, "subsidy_percent_others": 55 },
+    "kcc_interest_subvention_percent": 3
+  }
+}

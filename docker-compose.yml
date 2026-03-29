@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: agromind_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: agromind
+
+  backend:
+    build: ./backend
+    container_name: agromind_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - MONGO_URI=mongodb://mongodb:27017/agromind
+      - FLASK_DEBUG=false
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    container_name: agromind_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:

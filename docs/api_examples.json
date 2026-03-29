@@ -1,0 +1,160 @@
+{
+  "examples": {
+    "1_safe_advisory": {
+      "description": "Normal safe recommendation — cotton yellowing leaves",
+      "request": {
+        "method": "POST",
+        "url": "/api/advisory",
+        "body": {
+          "farmer_name": "Ramesh Kumar",
+          "crop_type": "Cotton (Bt)",
+          "soil_condition": "Black cotton soil, pH 7.8, EC 1.6 dS/m, low nitrogen (48 kg/ha), adequate potassium",
+          "weather": "Temperature 34°C, humidity 65%, last rain 8 days ago, forecast rain in 5 days",
+          "farmer_query": "My cotton is at 65 days old vegetative stage. Leaves are yellowing at the edges and curling slightly. What fertilizer and pest management should I do?",
+          "region": "maharashtra",
+          "land_size_acres": 3.2,
+          "season": "kharif",
+          "irrigation_type": "Bore-well",
+          "previous_crops": "Soybean"
+        }
+      },
+      "expected_response": {
+        "success": true,
+        "data": {
+          "session_id": "a1b2c3d4-...",
+          "recommendation": "Based on your description of yellowing at leaf edges on 65-day cotton...",
+          "risk_level": "Low",
+          "compliance_status": "Approved",
+          "violations": [],
+          "warnings": [],
+          "confidence_score": 0.87,
+          "immediate_actions": [
+            "Apply Calcium Ammonium Nitrate (CAN) @ 25 kg/acre — do not use plain urea due to high EC",
+            "Spray 2% KNO3 foliar @ 5ml/L if leaf yellowing is interveinal (magnesium deficiency)",
+            "Deploy yellow sticky traps @ 5/acre to monitor thrips and whitefly"
+          ],
+          "avoid_actions": [
+            "Do NOT spray imidacloprid again if already used once this season",
+            "Do NOT broadcast urea — volatilization loss will be high with EC 1.6"
+          ],
+          "relevant_schemes": ["PM-KISAN", "PMFBY", "RKVY"],
+          "reasoning": [
+            {"step_type": "DATA",       "label": "Data Collection",       "content": "Loading ICAR-CICR cotton protocol...", "source": "ICAR-CICR 2024"},
+            {"step_type": "RULE_CHECK", "label": "Regulatory Review",     "content": "Checking CIB&RC pesticide rules...",  "source": "CIB&RC"},
+            {"step_type": "ANALYSIS",   "label": "Problem Analysis",      "content": "Edge yellowing + curling at 65 DAS..."},
+            {"step_type": "GUARDRAIL",  "label": "Compliance Validation", "content": "Rule engine checked 8 rule sets. Status: Approved.", "triggered": false},
+            {"step_type": "ACTION",     "label": "Recommendation",        "content": "Calcium deficiency + minor thrips..."}
+          ]
+        }
+      }
+    },
+
+    "2_blocked_pesticide": {
+      "description": "Unsafe pesticide request — endosulfan and monocrotophos",
+      "request": {
+        "method": "POST",
+        "url": "/api/advisory",
+        "body": {
+          "farmer_name": "Suresh Patil",
+          "crop_type": "Cotton",
+          "soil_condition": "Red laterite soil, pH 6.5, moderate fertility",
+          "weather": "Hot and dry, 38°C, no rain for 15 days",
+          "farmer_query": "I have severe bollworm attack on my cotton. My neighbour suggested spraying endosulfan and monocrotophos together for better results. Can I do this?",
+          "region": "telangana",
+          "land_size_acres": 5.0,
+          "season": "kharif"
+        }
+      },
+      "expected_response": {
+        "success": true,
+        "data": {
+          "compliance_status": "Blocked",
+          "risk_level": "Critical",
+          "violations": [
+            "BANNED PESTICIDE DETECTED: 'endosulfan' is prohibited under CIB&RC / Pesticide Act 1968.",
+            "BANNED PESTICIDE DETECTED: 'monocrotophos' is prohibited under CIB&RC / Pesticide Act 1968."
+          ],
+          "recommendation": "⚠️ COMPLIANCE BLOCK: This recommendation has been blocked due to regulatory violations...",
+          "confidence_score": 0.92
+        }
+      }
+    },
+
+    "3_clarification_needed": {
+      "description": "Missing critical fields — agent asks for clarification",
+      "request": {
+        "method": "POST",
+        "url": "/api/advisory",
+        "body": {
+          "farmer_name": "Meena Devi",
+          "crop_type": "",
+          "soil_condition": "",
+          "weather": "Normal monsoon",
+          "farmer_query": "What fertilizer should I use?",
+          "region": "rajasthan"
+        }
+      },
+      "expected_response": {
+        "success": false,
+        "needs_clarification": true,
+        "clarification_questions": [
+          "Please provide: Crop Type",
+          "Please provide: Soil Condition"
+        ],
+        "error": "Some required fields are missing."
+      }
+    },
+
+    "4_get_demo_input": {
+      "description": "Fetch pre-built demo input",
+      "request": {
+        "method": "GET",
+        "url": "/api/advisory/demo/safe"
+      }
+    },
+
+    "5_audit_logs": {
+      "description": "Get paginated audit logs filtered by blocked status",
+      "request": {
+        "method": "GET",
+        "url": "/api/audit/logs?limit=10&skip=0&compliance_status=Blocked"
+      }
+    },
+
+    "6_audit_stats": {
+      "description": "Get dashboard statistics",
+      "request": {
+        "method": "GET",
+        "url": "/api/audit/stats"
+      },
+      "expected_response": {
+        "success": true,
+        "data": {
+          "total": 47,
+          "approved": 38,
+          "blocked": 5,
+          "modified": 4,
+          "high_risk": 6,
+          "storage": "mongodb"
+        }
+      }
+    },
+
+    "7_health_check": {
+      "description": "System health check",
+      "request": {
+        "method": "GET",
+        "url": "/api/health"
+      },
+      "expected_response": {
+        "success": true,
+        "data": {
+          "status": "healthy",
+          "database": "mongodb",
+          "ai_engine": "claude-sonnet-4-20250514",
+          "version": "2.0.0"
+        }
+      }
+    }
+  }
+}
